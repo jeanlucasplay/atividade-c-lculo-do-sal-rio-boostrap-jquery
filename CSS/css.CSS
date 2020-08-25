@@ -1,0 +1,50 @@
+html > body {
+    background-color: #131212e1;
+}
+.container {
+    margin-top: 30px;
+}
+
+form{
+    margin: auto;
+    width: 50%;
+    border: 3px solid #550202d3;
+    background-color: #80808027;
+    border-radius: 15px;
+    padding: 20px;
+}    
+
+div > label{
+    color: #ff0b0bdc;
+    
+}
+
+div > h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff0b0bdc;
+}
+
+div > hr {
+    border: 1px solid #ff0b0bdc;
+    background-color: #ff0b0bdc;
+}
+
+.btn-align{
+    width: 49%;
+}
+
+.form-btn{
+    text-align: center;
+    margin-top: 30px !important;
+}
+
+.msg{
+    display: none;
+}
+
+@media screen and (max-width: 600px){
+    form{
+        width: 100%;
+    }
+}

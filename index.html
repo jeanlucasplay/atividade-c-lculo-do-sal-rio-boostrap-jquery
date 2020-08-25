@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo do salário</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="bootstrap-4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="CSS/css.CSS">
+</head>
+<body>
+    <div class="container">
+        <form>
+            
+            <div class="form-group">
+                <h4><i class="fa fa-calculator" area-hidden="true"></i> Cálculo do salário</h4><hr>
+            </div>       
+            <div class="form-group">
+                <label><i class="fa fa-user" area-hidden="true"></i> Nome</label>
+                <input class="form-control" type="text" id="nome" placeholder="Digite seu nome">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa fa-money" area-hidden="true"></i> Valor hora</label>
+                <input class="form-control" type="number" id="valorhr" step="0.10" placeholder="R$0.00">
+            </div>
+            <div class="form-group">
+                <label><i class="fa fa-sort-amount-desc" area-hidden="true"></i> Quantidade de Horas Trabalhadas</label>
+                <input class="form-control" type="number" id="qtde" stop="0.10" placeholder="0.00">
+            </div>
+            <div class = "form-group">
+                <label><i class="fa fa-usd" area-hidden="true"></i> Salário Bruto</label>
+                <input class = "form-control disabled" type="number" id= "salariobruto" readonly placeholder="R$.00">
+            </div>
+            <div class="form-group">
+                <label><i class="fa fa-usd" area-hidden="true"></i> IRRF</label>
+                <input class="form-control" type="number" id="irrf" readonly placeholder="R$0.00">
+            </div>
+            <div class="form-group">
+                <label><i class="fa fa-usd" area-hidden="true"></i> Gratificação</label>
+                <input class="form-control" type="number" id="gratificacao" readonly placeholder="R$0.00">
+            </div>
+            <div class="form-group">
+                <label><i class="fa fa-usd" area-hidden="true"></i> Salário Líquido</label>
+                <input class="form-control" type="number" id="salarioliquido" readonly placeholder="R$0.00">
+            </div>
+            <div id = "msg-erro" class = "alert alert-danger msg">
+                <label>Preencha os campos corretamente!</label>
+            </div>       
+            <div id = "msg-sucesso" class = "alert alert-success msg">
+                <label>Cálculo realizado com sucesso!</label>
+            </div>
+            <div class="form-group form-btn">
+                <button class="btn btn-dark btn-align" type="reset">Limpar</button>
+                <button class="btn btn-success btn-align" 
+                    type="button" onclick="calcularSalario()">Calcular</button>
+            </div>
+        </form>
+    </div>
+    <script type = "text/javascript">
+        const calcularSalario = function(){
+            let nome = document.getElementById('nome').value
+            let valorhr = document.getElementById('valorhr').value
+            let qtde = document.getElementById('qtde').value
+            if (nome == "" || valorhr == "" || qtde == ""){
+                //document.getElementById('msg-erro').style.display = "block"
+                //document.getElementById('msg-sucesso').style.display = "none"
+                $("#msg-erro").slideDown(400).delay(2000).slideUp(400)
+            }else {
+                let salariobruto = parseFloat(valorhr) * parseFloat(qtde)
+                let irrf = 0
+                if(salariobruto <= 1903.98){
+                    irrf = 0.00
+                } else if(salariobruto > 1903.98 && salariobruto <= 2826.65) {
+                    irrf = salariobruto * 0.075
+                } else if(salariobruto > 2826.65 && salariobruto <= 3751.05) {
+                    irrf = salariobruto * 0.15
+                } else if(salariobruto > 3751.05 && salariobruto <= 4664.68) {
+                    irrf = salariobruto * 0.225
+                } else {
+                    irrf = salariobruto * 0.275
+                }
+
+                let gratificacao = 0
+                if(parseFloat(qtde) > 160) {
+                    gratificacao = salariobruto * 0.15
+                }
+
+                let salarioliquido = salariobruto - irrf + gratificacao
+
+                document.getElementById('valorhr').value = parseFloat(valorhr).toFixed(2)
+                document.getElementById('qtde').value = parseFloat(qtde).toFixed(2)
+                document.getElementById('salariobruto').value = salariobruto.toFixed(2)
+                document.getElementById('irrf').value = irrf.toFixed(2)
+                document.getElementById('gratificacao').value = gratificacao.toFixed(2)
+                document.getElementById('salarioliquido').value = salarioliquido.toFixed(2)
+                
+                //document.getElementById('msg-erro').style.display = "none"
+                //document.getElementById('msg-sucesso').style.display = "block"
+                $("#msg-sucesso").slideDown(400).delay(2000).slideUp(400)
+            }
+            
+        }
+    </script>
+    <!--JS-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap-4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
